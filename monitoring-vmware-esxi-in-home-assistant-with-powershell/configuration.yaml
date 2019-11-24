@@ -1,1 +1,287 @@
-.
+sensor:
+  - platform: time_date
+    display_options:
+      - 'time'
+      - 'date'
+      - 'date_time'
+      - 'date_time_iso'
+      - 'time_date'
+      - 'time_utc'
+      - 'beat'
+
+var:
+
+#ESXI - CPU
+  esxi_cpu_usage_mhz:
+    friendly_name: "ESXI CPU Usage MHz"
+    initial_value: 0
+    unit_of_measurement: 'MHz'
+    icon: mdi:cpu-64-bit
+
+  esxi_cpu_total_mhz:
+    friendly_name: "ESXI CPU Total MHz"
+    initial_value: 0
+    unit_of_measurement: 'MHz'
+    icon: mdi:cpu-64-bit
+
+  esxi_cpu_usage_pct:
+    friendly_name: "ESXI CPU Usage %"
+    initial_value: 0
+    unit_of_measurement: '%'
+    icon: mdi:cpu-64-bit
+    value_template: "{{ (states.var.esxi_cpu_usage_mhz.state | float / states.var.esxi_cpu_total_mhz.state | float * 100) | round(2)}}"
+    tracked_entity_id:
+      - var.esxi_cpu_usage_mhz
+      - var.esxi_cpu_total_mhz
+
+#ESXI - MEMORY
+  esxi_memory_usage_mb:
+    friendly_name: "ESXI Memory Usage MB"
+    initial_value: 0
+    unit_of_measurement: 'MB'
+    icon: mdi:memory
+
+  esxi_memory_total_mb:
+    friendly_name: "ESXI Memory Total MB"
+    initial_value: 0
+    unit_of_measurement: 'MB'
+    icon: mdi:memory
+
+  esxi_memory_usage_pct:
+    friendly_name: "ESXI Memory Usage %"
+    initial_value: 0
+    unit_of_measurement: '%'
+    icon: mdi:memory
+    value_template: "{{ (states.var.esxi_memory_usage_mb.state | float / states.var.esxi_memory_total_mb.state | float * 100) | round(2)}}"
+    tracked_entity_id:
+      - var.esxi_memory_usage_mb
+      - var.esxi_memory_total_mb
+
+#ESXI - DATASTORE
+
+  esxi_datastore1_space_free_gb:
+    friendly_name: "ESXI datastore1 free space GB"
+    initial_value: 0
+    unit_of_measurement: 'GB'
+    icon: mdi:database-plus
+
+  esxi_datastore1_space_total_gb:
+    friendly_name: "ESXI datastore1 total space GB"
+    initial_value: 0
+    unit_of_measurement: 'GB'
+    icon: mdi:database
+
+  esxi_datastore_1_space_used_gb:
+    friendly_name: "ESXI datastore1 used space GB"
+    initial_value: 0
+    unit_of_measurement: 'GB'
+    icon: mdi:database-minus
+    value_template: "{{ ((states.var.esxi_datastore1_space_total_gb.state | float) - (states.var.esxi_datastore1_space_free_gb.state | float))  | round(2) }}"
+    tracked_entity_id:
+      - var.esxi_datastore1_space_total_gb
+      - var.esxi_datastore1_space_free_gb
+
+  esxi_datastore2_space_free_gb:
+    friendly_name: "ESXI datastore2 free space GB"
+    initial_value: 0
+    unit_of_measurement: 'GB'
+    icon: mdi:database-plus
+
+  esxi_datastore2_space_total_gb:
+    friendly_name: "ESXI datastore2 total space GB"
+    initial_value: 0
+    unit_of_measurement: 'GB'
+    icon: mdi:database
+
+  esxi_datastore_2_space_used_gb:
+    friendly_name: "ESXI datastore2 used space GB"
+    initial_value: 0
+    unit_of_measurement: 'GB'
+    icon: mdi:database-minus
+    value_template: "{{ ((states.var.esxi_datastore2_space_total_gb.state | float) - (states.var.esxi_datastore2_space_free_gb.state | float))  | round(2) }}"
+    tracked_entity_id:
+      - var.esxi_datastore2_space_total_gb
+      - var.esxi_datastore2_space_free_gb
+
+  esxi_datastore3_space_free_gb:
+    friendly_name: "ESXI datastore3 free space GB"
+    initial_value: 0
+    unit_of_measurement: 'GB'
+    icon: mdi:database-plus
+
+  esxi_datastore3_space_total_gb:
+    friendly_name: "ESXI datastore3 total space GB"
+    initial_value: 0
+    unit_of_measurement: 'GB'
+    icon: mdi:database
+
+  esxi_datastore_3_space_used_gb:
+    friendly_name: "ESXI datastore3 used space GB"
+    initial_value: 0
+    unit_of_measurement: 'GB'
+    icon: mdi:database-minus
+    value_template: "{{ ((states.var.esxi_datastore3_space_total_gb.state | float) - (states.var.esxi_datastore3_space_free_gb.state | float))  | round(2) }}"
+    tracked_entity_id:
+      - var.esxi_datastore3_space_total_gb
+      - var.esxi_datastore3_space_free_gb
+
+#ESXI - UPTIME
+  esxi_uptime_total_seconds:
+    friendly_name: "ESXI Uptime seconds (In total)"
+    initial_value: 0
+    unit_of_measurement: 'total seconds'
+    icon: mdi:update
+
+  esxi_uptime_seconds:
+    friendly_name: "ESXI Uptime seconds in (In DD/HH/MM/SS)"
+    initial_value: 0
+    unit_of_measurement: 'seconds'
+    icon: mdi:update
+    value_template: "{{ ( (states.var.esxi_uptime_total_seconds.state | float ) % 60 ) | int }}"
+    tracked_entity_id:
+      - var.esxi_uptime_total_seconds
+
+  esxi_uptime_minutes:
+    friendly_name: "ESXI Uptime minutes in (In DD/HH/MM/SS)"
+    initial_value: 0
+    unit_of_measurement: 'minutes'
+    icon: mdi:update
+    value_template: "{{ ( (states.var.esxi_uptime_total_seconds.state | float % 3600 ) / 60 ) | int }}"
+    tracked_entity_id:
+      - var.esxi_uptime_total_seconds
+
+  esxi_uptime_hours:
+    friendly_name: "ESXI Uptime hours in (In DD/HH/MM/SS)"
+    initial_value: 0
+    unit_of_measurement: 'hours'
+    icon: mdi:update
+    value_template: "{{ ( (states.var.esxi_uptime_total_seconds.state | float / 3600) % 24 ) | int }}"
+    tracked_entity_id:
+      - var.esxi_uptime_total_seconds
+
+  esxi_uptime_days:
+    friendly_name: "ESXI Uptime days in (In DD/HH/MM/SS)"
+    initial_value: 0
+    unit_of_measurement: 'days'
+    icon: mdi:update
+    value_template: "{{ ( (states.var.esxi_uptime_total_seconds.state | float / 86400 )) | int }}"
+    tracked_entity_id:
+      - var.esxi_uptime_total_seconds
+
+#ESXI - VM STATS
+
+  esxi_vm_admin_server_avg_cpu_usage_pct:
+    friendly_name: "Admin-Server VM avg. CPU usage in %"
+    initial_value: 0
+    unit_of_measurement: '%'
+    icon: mdi:cpu-64-bit
+
+  esxi_vm_admin_server_avg_memory_usage_pct:
+    friendly_name: "Admin-Server VM avg. memory usage in %"
+    initial_value: 0
+    unit_of_measurement: '%'
+    icon: mdi:memory
+
+  esxi_vm_admin_server_avg_net_usage_kbps:
+    friendly_name: "Admin-Server VM avg. network usage in KBps"
+    initial_value: 0
+    unit_of_measurement: 'KB/s'
+    icon: mdi:lan
+
+  esxi_vm_admin_server_avg_disk_usage_kbps:
+    friendly_name: "Admin-Server VM avg. disk usage in KBps"
+    initial_value: 0
+    unit_of_measurement: 'KB/s'
+    icon: mdi:database
+
+
+
+  esxi_vm_home_assistant_avg_cpu_usage_pct:
+    friendly_name: "Home-Assistant VM avg. CPU usage in %"
+    initial_value: 0
+    unit_of_measurement: '%'
+    icon: mdi:cpu-64-bit
+
+  esxi_vm_home_assistant_avg_memory_usage_pct:
+    friendly_name: "Home-Assistant VM avg. memory usage in %"
+    initial_value: 0
+    unit_of_measurement: '%'
+    icon: mdi:memory
+
+  esxi_vm_home_assistant_avg_net_usage_kbps:
+    friendly_name: "Home-Assistant VM avg. network usage in KBps"
+    initial_value: 0
+    unit_of_measurement: 'KB/s'
+    icon: mdi:lan
+
+  esxi_vm_home_assistant_avg_disk_usage_kbps:
+    friendly_name: "Home-Assistant VM avg. disk usage in KBps"
+    initial_value: 0
+    unit_of_measurement: 'KB/s'
+    icon: mdi:database
+
+
+
+  esxi_vm_plex_avg_cpu_usage_pct:
+    friendly_name: "Plex VM avg. CPU usage in %"
+    initial_value: 0
+    unit_of_measurement: '%'
+    icon: mdi:cpu-64-bit
+
+  esxi_vm_plex_avg_memory_usage_pct:
+    friendly_name: "Plex VM avg. memory usage in %"
+    initial_value: 0
+    unit_of_measurement: '%'
+    icon: mdi:memory
+
+  esxi_vm_plex_avg_net_usage_kbps:
+    friendly_name: "Plex VM avg. network usage in KBps"
+    initial_value: 0
+    unit_of_measurement: 'KB/s'
+    icon: mdi:lan
+
+  esxi_vm_plex_avg_disk_usage_kbps:
+    friendly_name: "Plex VM avg. disk usage in KBps"
+    initial_value: 0
+    unit_of_measurement: 'KB/s'
+    icon: mdi:database
+
+
+
+  esxi_vm_deluge_avg_cpu_usage_pct:
+    friendly_name: "Deluge VM avg. CPU usage in %"
+    initial_value: 0
+    unit_of_measurement: '%'
+    icon: mdi:cpu-64-bit
+
+  esxi_vm_deluge_avg_memory_usage_pct:
+    friendly_name: "Deluge VM avg. memory usage in %"
+    initial_value: 0
+    unit_of_measurement: '%'
+    icon: mdi:memory
+
+  esxi_vm_deluge_avg_net_usage_kbps:
+    friendly_name: "Deluge VM avg. network usage in KBps"
+    initial_value: 0
+    unit_of_measurement: 'KB/s'
+    icon: mdi:lan
+
+  esxi_vm_deluge_avg_disk_usage_kbps:
+    friendly_name: "Deluge VM avg. disk usage in KBps"
+    initial_value: 0
+    unit_of_measurement: 'KB/s'
+    icon: mdi:database
+
+input_text:
+  esxi_vm_admin_server_powerstate:
+    name: Admin-Server VM PowerState
+    initial: Unknown
+  esxi_vm_home_assistant_powerstate:
+    name: Home-Assistant VM PowerState
+    initial: Unknown
+  esxi_vm_deluge_powerstate:
+    name: Deluge VM PowerState
+    initial: Unknown
+  esxi_vm_plex_powerstate:
+    name: Plex VM PowerState
+    initial: Unknown
