@@ -1,0 +1,69 @@
+/*****************************************************
+ * Magic Mirror                                      *
+ * Custom CSS                                        *
+ *                                                   *
+ * By Michael Teeuw http://michaelteeuw.nl           *
+ * MIT Licensed.                                     *
+ *                                                   *
+ * Add any custom CSS below.                         *
+ * Changes to this files will be ignored by GIT. *
+ *****************************************************/
+
+ body {
+ }
+
+ 
+  
+  /* cells of not this month */
+  .CX2 .cellSlot:not(.thismonth) {
+    background-color:#000;
+  }
+  
+  /* header of cells of this month */
+  .CX2 .cellSlot.thismonth .slotHeader{
+    color:#000;
+    background-color:#FFF;
+  }
+  
+  /* header of cell of today */
+  .CX2 .cellSlot.today .slotHeader {
+    background-color:#F33;
+    color:#000;
+  }
+  
+  /* flemming_jobb style */
+  .CX2 .flemming_jobb {
+    background-color:#FB0;
+    color:#000;
+    }
+ 
+   /* flemming_jobb style fullday*/
+   .CX2 .flemming_jobb.fullday {
+      background-color:#FB0;
+      color:#000;
+      }
+
+  /*  flemming_privat style fullday*/
+  .CX2 .flemming_privat {
+      background-color:#1A5;
+      color:#000;
+      }
+
+  /*  flemming_privat style fullday*/
+  .CX2 .flemming_privat.fullday {
+      background-color:#1A5;
+      color:#000;
+      }
+
+  /* facebook style */
+  .CX2 .facebook {
+   background-color:#36A;
+   color:#000;
+  }
+
+    /* Facebook style fullday*/
+  .CX2 .facebook.fullday {
+   background-color:#36A;
+   color:#000;
+  }
+
