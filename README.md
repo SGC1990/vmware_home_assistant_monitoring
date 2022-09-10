@@ -1,2 +1,1 @@
-# flemmingss.com
-Files hosted for flemmingss.com
+VMware Home Assistant Monitoring Scripts
